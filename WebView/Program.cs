@@ -97,10 +97,6 @@ class Program
         _controller.Bounds = new Rectangle(0, 0, hwndRect.right, hwndRect.bottom);
         _controller.IsVisible = true;
 
-        // Navigate to a local folder, just to confirm that WebView2 is working
-        _controller.CoreWebView2.SetVirtualHostNameToFolderMapping("webview.example", "staticfiles", CoreWebView2HostResourceAccessKind.Allow);
-        _controller.CoreWebView2.Navigate("https://webview.example/index.html");
-
         // Spin up ASP.NET and navigate to it
         _webApp = await BlazorServer.Hosting.StartOnThreadpool();
         _controller.CoreWebView2.Navigate("http://localhost:5003/");

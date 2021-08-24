@@ -32,10 +32,4 @@
     <ProjectReference Include="..\BlazorServer\BlazorServer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="staticfiles\index.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
