@@ -14,7 +14,7 @@ I am using the latest .NET 6 ASP.NET core minimal hosting APIs, but in a way tha
 
 ## Steps to Reproduce
 
-I have created a Blazor project named BlazorServer using the .NET 6p7 Blazor Server template project, converted it to a library project, and moved Program.cs largely as-is into a static function in `Hosting.cs`:
+I have created a Blazor project named BlazorServer using the .NET 6 Blazor Server template project (the new one using minimal APIs), converted it to a library project, and moved Program.cs largely as-is into a static function in `Hosting.cs`:
 
 ```cs
 public static async Task<WebApplication> StartOnThreadpool() =>
