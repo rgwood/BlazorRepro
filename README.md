@@ -1,6 +1,6 @@
 # Blazor Hosting Repro
 
- I'm trying to host Blazor Server inside a desktop application (and then display it inside WebView2), but I'm running into a Razor routing failure at runtime:
+ I'm trying to host Blazor Server inside a desktop application, but am running into a Razor routing failure at runtime:
 
  ```
  System.InvalidOperationException: Cannot find the fallback endpoint specified by route values: { page: /_Host, area:  }.
@@ -10,11 +10,9 @@
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
 ```
 
-I am using the latest .NET 6 ASP.NET core minimal hosting APIs, but in a way that is somewhat unusual. There is a decent chance that this is an issue with how I am hosting Blazor and not an ASP.NET bug.
+I am using the latest .NET 6 ASP.NET core minimal hosting APIs, but in a way that is somewhat unusual. I'm not sure if this is an issue with how I am hosting Blazor or an ASP.NET bug.
 
-## Hosting Environment
-
-A minimal .NET 6 application that displays UI using WebView2. There is no WinForms, no WPF, [just a Win32 message pump](https://github.com/rgwood/MinimalWebView). This is the WebView project in the repo.
+## Steps to Reproduce
 
 I have created a Blazor project named BlazorServer using the .NET 6p7 Blazor Server template project, converted it to a library project, and moved Program.cs largely as-is into a static function in `Hosting.cs`:
 
@@ -30,13 +28,16 @@ public static async Task<WebApplication> StartOnThreadpool() =>
         });
 ```
 
-Inside WebView.Program, I start up ASP.NET and navigate to the page:
+The only changes from the template are `app.Urls.Add("http://localhost:5003");` and calling `StartAsync()` instead of `Run()`.
+
+Inside ConsoleApp, I start up ASP.NET:
 
 ```cs
-_webApp = await BlazorServer.Hosting.StartOnThreadpool();
-_controller.CoreWebView2.Navigate("http://localhost:5003/");
+await BlazorServer.Hosting.StartOnThreadpool();
 ```
-Boom:
+
+Then navigate to https://localhost:5003 to see the error:
+
 ![screenshot](screenshot.png)
 
 ## Fixes attempted
